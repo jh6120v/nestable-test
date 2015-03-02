@@ -91,7 +91,8 @@ p {
 }
 
 #nestable-output,
-#nestable2-output {
+#nestable2-output,
+#nestable3-output {
     width: 100%;
     height: 7em;
     font-size: 0.75em;
@@ -303,6 +304,7 @@ p {
     </div>
 
 </div>
+<textarea id="nestable3-output"></textarea>
 
 <p class="small">Copyright &copy; <a href="http://dbushell.com/">David Bushell</a> | Made for <a href="http://www.browserlondon.com/">Browser</a></p>
 
@@ -406,6 +408,7 @@ p {
         updateOutput($('#nestable').data('output', $('#nestable-output')));
         updateOutput($('#nestable2').data('output', $('#nestable2-output')));
 
+
         $('#nestable-menu').on('click', function(e) {
             var target = $(e.target),
                     action = target.data('action');
@@ -417,7 +420,8 @@ p {
             }
         });
 
-        $('#nestable3').nestable();
+        $('#nestable3').nestable().on('change', updateOutput);;
+        updateOutput($('#nestable3').data('output', $('#nestable3-output')));
 
     });
 </script>
