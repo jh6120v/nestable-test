@@ -226,6 +226,9 @@ p {
 <menu id="nestable-menu">
     <button type="button" data-action="expand-all">Expand All</button>
     <button type="button" data-action="collapse-all">Collapse All</button>
+    <input type="button" id="add" value="add">
+    <input type="button" id="remove" value="remove">
+    <input type="button" id="btn" value="test">
 </menu>
 
 <div class="cf nestable-lists">
@@ -273,7 +276,7 @@ p {
     <p>If you're clever with your CSS and markup this can be achieved without any JavaScript changes.</p>
 
     <div class="dd" id="nestable3">
-        <ol class="dd-list">
+        <ol class="dd-list outer">
             <li class="dd-item dd3-item" data-id="13">
                 <div class="dd-handle dd3-handle">Drag</div>
                 <div class="dd3-content">Item 13</div>
@@ -313,7 +316,17 @@ p {
 <script>
 
     $(document).ready(function() {
-
+        $("input#btn").on("click",function(){
+            alert(window.JSON.stringify($('#nestable3').nestable('serialize')));
+        });
+        $("input#add").on("click",function(){
+            $("ol.outer").append('<li class="dd-item dd3-item" data-id="25"><div class="dd-handle dd3-handle">Drag</div><div class="dd3-content">Item 25</div></li>');
+        });
+        $("input#remove").on("click",function(){
+            $('#nestable3').nestable(
+                unsetParent(1)
+            );
+        });
         var updateOutput = function(e) {
             var list = e.length ? e : $(e.target),
                     output = list.data('output');
@@ -420,10 +433,17 @@ p {
             }
         });
 
-        $('#nestable3').nestable().on('change', updateOutput);;
-        updateOutput($('#nestable3').data('output', $('#nestable3-output')));
-
+        $('#nestable3').nestable();
+        //updateOutput($('#nestable3').data('output', $('#nestable3-output')));
+        console.log(window.JSON.stringify($('#nestable3').nestable('serialize')));
+        //var obj = jQuery.parseJSON( $('#nestable3').nestable('serialize') );
+        //alert( window.JSON.stringify($('#nestable3').nestable('serialize')) );
     });
 </script>
+<?php
+$string = '[{"id":13},{"id":14},{"id":15,"children":[{"id":16},{"id":17},{"id":18}]}]';
+$aaa = json_decode($string);
+echo $aaa[2]->children[0]->id;
+?>
 </body>
 </html>
