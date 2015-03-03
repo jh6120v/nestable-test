@@ -404,12 +404,6 @@ p {
         $('#nestable').nestable({
             group: 1,
             json: json,
-            contentCallback: function(item) {
-                var content = item.content || '' ? item.content : item.id;
-                content += ' <i>(id = ' + item.id + ')</i>';
-
-                return content;
-            }
         }).on('change', updateOutput);
 
         // activate Nestable for list 2
